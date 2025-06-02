@@ -18,8 +18,9 @@ def predictor():
 def predict():
     try:
         features = [float(request.form[x]) for x in [
-            'Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness',
-            'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']]
+    'pregnancies', 'glucose', 'blood_pressure', 'skin_thickness',
+    'insulin', 'bmi', 'diabetes_pedigree_function', 'age']]
+
         input_scaled = scaler.transform([features])
         prediction = model.predict(input_scaled)[0]
         if prediction == 1:

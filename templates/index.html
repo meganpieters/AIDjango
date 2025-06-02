@@ -3,21 +3,135 @@
 
 <head>
     <title>Diabetes Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #e0f7fa, #80deea);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        h2 {
+            font-weight: 600;
+            color: #00796b;
+            margin-bottom: 30px;
+        }
+
+        .form-container {
+            animation: fadeIn 1s ease-in-out;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #37474f;
+        }
+
+        .form-control:focus {
+            border-color: #00acc1;
+            box-shadow: 0 0 0 0.2rem rgba(0, 172, 193, 0.25);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-primary {
+            background-color: #00acc1;
+            border: none;
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        .btn-primary:hover {
+            background-color: #00838f;
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 
-<body>
-    <h2>Enter Patient Details</h2>
-    <form method="post" action="/predict">
-        {% for field in ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI',
-        'DiabetesPedigreeFunction', 'Age'] %}
-        <label>{{ field }}</label><br>
-        <input type="number" step="any" name="{{ field }}" required><br><br>
-        {% endfor %}
-        <button type="submit">Predict</button>
-    </form>
-    {% if prediction %}
-    <h3>Result: {{ prediction }}</h3>
-    {% endif %}
+<body class="bg-light text-center py-5">
+    <div class="container">
+        <h2>Enter Patient Details</h2>
+        <form id="diabetes-form" method="post" action="/predict" class="mx-auto p-4 bg-white rounded shadow needs-validation"
+              style="max-width: 700px;" novalidate>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 text-start">
+                        <label class="form-label">Pregnancies</label>
+                        <input type="number" name="pregnancies" class="form-control" min="0" max="20" step="1" required>
+                        <div class="invalid-feedback">Please enter a valid number of pregnancies (0–20).</div>
+                    </div>
+                    <div class="mb-3 text-start">
+                        <label class="form-label">Glucose</label>
+                        <input type="number" name="glucose" class="form-control" min="0" max="300" step="1" required>
+                        <div class="invalid-feedback">Please enter a glucose value between 0–300.</div>
+                    </div>
+                    <div class="mb-3 text-start">
+                        <label class="form-label">Blood Pressure</label>
+                        <input type="number" name="blood_pressure" class="form-control" min="0" max="200" step="1" required>
+                        <div class="invalid-feedback">Please enter a valid blood pressure (0–200).</div>
+                    </div>
+                    <div class="mb-3 text-start">
+                        <label class="form-label">Skin Thickness</label>
+                        <input type="number" name="skin_thickness" class="form-control" min="0" max="100" step="1" required>
+                        <div class="invalid-feedback">Skin thickness must be between 0–100 mm.</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3 text-start">
+                        <label class="form-label">Insulin</label>
+                        <input type="number" name="insulin" class="form-control" min="0" max="1000" step="1" required>
+                        <div class="invalid-feedback">Please enter a valid insulin value (0–1000).</div>
+                    </div>
+                    <div class="mb-3 text-start">
+                        <label class="form-label">BMI</label>
+                        <input type="number" name="bmi" class="form-control" min="10" max="80" step="0.1" required>
+                        <div class="invalid-feedback">BMI must be between 10–80 kg/m².</div>
+                    </div>
+                    <div class="mb-3 text-start">
+                        <label class="form-label">Diabetes Pedigree Function</label>
+                        <input type="number" name="diabetes_pedigree_function" class="form-control" min="0" max="2.5" step="0.01" required>
+                        <div class="invalid-feedback">Value must be between 0.0–2.5.</div>
+                    </div>
+                    <div class="mb-3 text-start">
+                        <label class="form-label">Age</label>
+                        <input type="number" name="age" class="form-control" min="1" max="120" step="1" required>
+                        <div class="invalid-feedback">Age must be between 1–120 years.</div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mt-3">Predict</button>
+        </form>
+
+        {% if prediction %}
+        <h3 class="mt-4 text-success fw-bold">Result: {{ prediction }}</h3>
+        {% endif %}
+    </div>
+
+    <script>
+        // Bootstrap 5 custom validation
+        (function () {
+            const form = document.getElementById('diabetes-form');
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        })();
+    </script>
 </body>
 
 </html>

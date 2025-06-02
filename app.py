@@ -8,6 +8,10 @@ scaler = joblib.load('model/scaler.pkl')
 
 @app.route('/')
 def home():
+    return render_template('home.html')
+
+@app.route('/predictor')
+def predictor():
     return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
@@ -19,7 +23,7 @@ def predict():
         input_scaled = scaler.transform([features])
         prediction = model.predict(input_scaled)[0]
         if prediction == 1:
-            result = "Patient is likely to have diabetes, further testing is recommended."
+            result = "Patient is likely to have diabetes – recommend further testing."
         else:
             result = "No risk of diabetes detected."
         return render_template('index.html', prediction=result)

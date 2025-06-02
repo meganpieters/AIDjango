@@ -9,16 +9,17 @@
         body {
             background: linear-gradient(135deg, #e0f7fa, #80deea);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
-        .welcome-container {
+        .welcome-box {
             max-width: 700px;
-            margin: 80px auto;
+            margin: 80px auto 0;
             padding: 40px;
             background: white;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1s ease-in-out;
             text-align: center;
         }
 
@@ -49,29 +50,62 @@
             transform: translateY(-2px);
         }
 
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
+        .gallery-section {
+            padding: 60px 40px 100px;
+        }
 
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .gallery-title {
+            text-align: center;
+            color: #004d40;
+            font-weight: 600;
+            margin-bottom: 30px;
+            font-size: 1.6rem;
+        }
+
+        .gallery-images {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .gallery-images img {
+            width: 280px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .gallery-images img:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
 
 <body>
-    <div class="welcome-container">
+
+    <!-- White welcome card -->
+    <div class="welcome-box">
         <h1>Welcome to the Diabetes-Risk-Inator</h1>
-        <p>
-            This app helps doctors assess diabetes risk using clinical features like glucose level, BMI, age, and more.
-            Click below to begin the prediction.
-        </p>
+        <p>This app helps doctors assess diabetes risk using clinical features like glucose level, BMI, age, and more.
+            Click below to begin the prediction.</p>
         <a href="/predictor" class="btn btn-start">Start Prediction</a>
     </div>
+
+    <!-- Full-width gradient background gallery -->
+    <div class="gallery-section">
+        <h4 class="gallery-title">Explore More About Diabetes</h4>
+        <div class="gallery-images">
+            <img src="{{ url_for('static', filename='pictures/diabetes.png') }}" alt="Image 1">
+            <img src="{{ url_for('static', filename='pictures/naald.jpg') }}" alt="Image 2">
+            <img src="{{ url_for('static', filename='pictures/broccoli.webp') }}" alt="Image 2">
+            <img src="{{ url_for('static', filename='pictures/arts.jpeg') }}" alt="Image 2">
+
+        </div>
+    </div>
+
 </body>
 
 </html>

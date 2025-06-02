@@ -18,18 +18,23 @@ def predictor():
 def predict():
     try:
         features = [float(request.form[x]) for x in [
-    'pregnancies', 'glucose', 'blood_pressure', 'skin_thickness',
-    'insulin', 'bmi', 'diabetes_pedigree_function', 'age']]
+            'pregnancies', 'glucose', 'blood_pressure', 'skin_thickness',
+            'insulin', 'bmi', 'diabetes_pedigree_function', 'age']]
 
         input_scaled = scaler.transform([features])
         prediction = model.predict(input_scaled)[0]
+        proba = model.predict_proba(input_scaled)[0][1]  
+
         if prediction == 1:
-            result = "Patient is likely to have diabetes – recommend further testing."
+            result = f"Patient is likely to have diabetes – recommend further testing. (Confidence diabetes: {proba:.1%})"
         else:
-            result = "No risk of diabetes detected."
+            result = f"No risk of diabetes detected. (Confidence: {(1 - proba):.1%})"
+
         return render_template('index.html', prediction=result)
+
     except Exception as e:
-        return f"Error: {str(e)}"
+        return f"<pre>{str(e)}</pre>"
+
 
 if __name__ == '__main__':
     app.run(debug=True)

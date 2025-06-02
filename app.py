@@ -19,7 +19,7 @@ def predict():
         input_scaled = scaler.transform([features])
         prediction = model.predict(input_scaled)[0]
         if prediction == 1:
-            result = "Patient is likely to have diabetes – recommend further testing."
+            result = "Patient is likely to have diabetes, further testing is recommended."
         else:
             result = "No risk of diabetes detected."
         return render_template('index.html', prediction=result)

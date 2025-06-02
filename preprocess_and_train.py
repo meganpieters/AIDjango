@@ -8,16 +8,11 @@ import joblib
 # Load data
 df = pd.read_csv('Data/diabetes.csv')
 
-
-# Replace zeroes with NaN for certain columns
+# CHeck for 0 values and replace Nan
 columns_to_replace = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']
 df[columns_to_replace] = df[columns_to_replace].replace(0, pd.NA)
 
-# Fill missing values with median
-# Fill missing values
 df.fillna(df.median(numeric_only=True), inplace=True)
-
-# Ensure all features are numeric (remove leftover NAs just in case)
 df = df.dropna()
 df = df.astype(float)
 
@@ -37,7 +32,7 @@ X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, 
 model = RandomForestClassifier()
 model.fit(X_train, y_train)
 
-# Evaluation
+# Evaluate model
 y_pred = model.predict(X_test)
 print(classification_report(y_test, y_pred))
 
